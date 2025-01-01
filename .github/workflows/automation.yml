@@ -17,4 +17,4 @@ jobs:
           name: static-site
           path: out/
       - name: Start Application
-        run: npm start
+        run: npm start & npx wait-on http://localhost:3000
