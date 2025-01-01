@@ -16,3 +16,5 @@ jobs:
         with:
           name: static-site
           path: out/
+      - name: Start Application
+        run: npm start
