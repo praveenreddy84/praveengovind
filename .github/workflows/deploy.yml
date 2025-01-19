@@ -10,14 +10,14 @@ on:
 jobs:
   deploy:
     name: Deploy Next.js Application
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # Step 1: Download Build Artifacts
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: static-site
+          name: nextjs-build
 
       # Step 2: Deploy Application to Server
       - name: Deploy Application to Server
