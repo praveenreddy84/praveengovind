@@ -16,26 +16,18 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: nextjs-build
+          path: ./artifact
 
       # Step 2: Deploy Application to Server
       - name: Deploy Application to Server
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            mkdir -p /home/pi/nextjs-app/.next
-            scp -r .next/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pi/nextjs-app/.next/
+        run: |
+          scp -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} -r ./artifact/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pi/nextjs-app/.next/
 
       # Step 3: Restart Application
       - name: Restart Application
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/pi/nextjs-app
-            npm install --production
-            pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          cd /home/pi/nextjs-app
+          npm install --production
+          pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
+          EOF
