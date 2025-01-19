@@ -2,11 +2,10 @@ name: Deploy Next.js Application
 
 on:
   workflow_run:
-    workflows: 
-      - Build Next.js Application  # Ensure this matches the name in build.yml
-    types:
-      - completed  # Trigger on successful completion of the build workflow
-
+      workflows: ['Build Next.js Application']
+      types: [completed]
+      branches:
+          - 'main'
 jobs:
   deploy:
     name: Deploy Next.js Application
