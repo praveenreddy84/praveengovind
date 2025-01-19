@@ -16,20 +16,23 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: nextjs-build
-          path: ./artifact
+          path: ./praveengovind_artifact
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
         
       # Step 2: Debug Artifact Contents
       - name: Verify Artifact Contents
-        run: ls -la ./artifact/
+        run: ls -la ./praveengovind_artifact/
 
-      # Step 3: Deploy Application to Server
+      # Step 2: Create Target Directory
+      - name: Create Target Directory
+        run: mkdir -p /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+
+      # Step 3: Copy Files to Target Directory
       - name: Copy Files
-        run: |
-          cp -r /home/pgovind/Public/WWW/PraveenGovind/praveengovind/artifact/* /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+        run: cp -r /home/pgovind/Public/WWW/PraveenGovind/praveengovind/praveengovind_artifact/* /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
 
-      # Step 3: Restart the Application
+      # Step 4: Restart the Application
       - name: Restart Application
         run: |
           cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
