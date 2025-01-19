@@ -1,0 +1,42 @@
+name: Build Next.js Application
+
+# Trigger the workflow on push to the main branch or pull requests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Next.js Application
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Specify a compatible Node.js version
+          cache: 'npm'       # Enable caching for faster builds
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Step 4: Build the application
+      - name: Build Application
+        run: npm run build
+
+      # Step 5: Archive build artifacts (optional)
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: nextjs-build
+          path: .next/ # The build directory for Next.js
