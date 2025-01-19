@@ -29,18 +29,19 @@ jobs:
       # Step 4: Build the application
       - name: Build Next.js Application
         run: npm run build
+        continue-on-error: false
 
-      # Step 5: Debug artifact path
-      - name: Debug - List `.next` Directory
+      # Step 5: Verify .next directory
+      - name: Verify Build Output
         run: |
           echo "Root directory:"
           ls -la
           echo ".next directory:"
-          ls -la .next
+          ls -la .next/
 
       # Step 6: Upload build artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: nextjs-build
-          path: .next/
+          path: .next/**/*  # Ensure all files in .next/ are uploaded
