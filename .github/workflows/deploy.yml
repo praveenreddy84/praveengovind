@@ -10,6 +10,7 @@ jobs:
     name: Deploy Next.js Application
     runs-on: self-hosted
 
+    
     steps:
       # Step 1: Download Build Artifacts
       - name: Download Build Artifacts
@@ -24,15 +25,15 @@ jobs:
       - name: Verify Artifact Contents
         run: ls -la ./praveengovind_artifact/
 
-      # Step 2: Create Target Directory
+      # Step 3: Create Target Directory
       - name: Create Target Directory
         run: mkdir -p /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
 
-      # Step 3: Copy Files to Target Directory
+      # Step 4: Copy Files to Target Directory
       - name: Copy Files
-        run: cp -r /home/pgovind/Public/WWW/PraveenGovind/praveengovind/praveengovind_artifact/* /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+        run: cp -r ./praveengovind_artifact/* /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
 
-      # Step 4: Restart Application
+      # Step 5: Restart Application
       - name: Restart Application
         run: |
           export PATH=$PATH:/usr/local/bin
@@ -42,7 +43,7 @@ jobs:
           pm2 describe nextjs-app || pm2 start npm --name "nextjs-app" -- start
           pm2 restart nextjs-app --update-env
 
-      # Step 5: Save PM2 Process
+      # Step 6: Save PM2 Process
       - name: Save PM2 Process
         run: |
           export PATH=$PATH:/usr/local/bin
