@@ -41,7 +41,13 @@ jobs:
 
       # Step 6: Upload build artifacts
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nextjs-build
-          path: .next/**/*  # Ensure all files in .next/ are uploaded
+          path: |
+            ${{ github.workspace }}/.next
+            ${{ github.workspace }}/.next/standalone
+            ${{ github.workspace }}/.env.local
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 9
