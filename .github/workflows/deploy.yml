@@ -6,7 +6,6 @@ on:
       - Build Next.js Application  # Name of the build workflow
     types:
       - completed  # Trigger on successful completion of the build workflow
-
 jobs:
   deploy:
     name: Deploy Next.js Application
