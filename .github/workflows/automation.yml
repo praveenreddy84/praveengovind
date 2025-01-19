@@ -1,0 +1,27 @@
+name: Deploy Next.js Application
+
+on:
+    workflow_run:
+      workflows:
+        - Build Next.js Application
+      types:
+        - completed
+jobs:
+  deploy:
+    name: Deploy Next.js Application
+    runs-on: self-hosted
+
+    steps:
+      # Step 1: Download the build artifact
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: nextjs-build  # Ensure this matches the artifact name in build.yml
+
+      # Step 2: Deploy the artifact to the server
+      - name: Deploy Application to Server
+        uses: appleboy/scp-action@v0.1.1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
