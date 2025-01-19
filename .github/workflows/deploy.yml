@@ -2,10 +2,9 @@ name: Deploy Next.js Application
 
 on:
   workflow_run:
-      workflows: ['Build and Upload Next.js Artifacts']
-      types: [completed]
-      branches:
-          - 'main'
+    workflows: ['Build and Upload Next.js Artifacts']
+    types: [completed]
+
 jobs:
   deploy:
     name: Deploy Next.js Application
@@ -20,13 +19,14 @@ jobs:
 
       # Step 2: Deploy Application to Server
       - name: Deploy Application to Server
-        uses: appleboy/scp-action@v0.1.1
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: .next/
-          target: /home/pi/nextjs-app/.next/
+          script: |
+            mkdir -p /home/pi/nextjs-app/.next
+            scp -r .next/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pi/nextjs-app/.next/
 
       # Step 3: Restart Application
       - name: Restart Application
