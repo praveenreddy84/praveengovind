@@ -27,7 +27,7 @@ jobs:
       # Step 3: Deploy Application to Server
       - name: Deploy Application to Server
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }}" ./artifact/.next/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pgovind/Public/WWW/PraveenGovind/praveengovind/.next/
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }}" ./artifact/.next/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pgovind/Public/WWW/PraveenGovind/praveengovind/
 
       # Step 4: Restart Application
       - name: Restart Application
