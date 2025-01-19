@@ -1,4 +1,4 @@
-name: Build Next.js Application
+name: Build and Upload Next.js Artifacts
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository code
+      # Step 1: Checkout code
       - name: Checkout Code
         uses: actions/checkout@v3
 
@@ -30,8 +30,8 @@ jobs:
       - name: Build Next.js Application
         run: npm run build
 
-      # Step 5: Debug - List files
-      - name: Debug - List Files
+      # Step 5: Debug artifact path
+      - name: Debug - List `.next` Directory
         run: |
           echo "Root directory:"
           ls -la
