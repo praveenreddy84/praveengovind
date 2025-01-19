@@ -17,7 +17,9 @@ jobs:
         with:
           name: nextjs-build
           path: ./artifact
-
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        
       # Step 2: Debug Artifact Contents
       - name: Verify Artifact Contents
         run: ls -la ./artifact/
