@@ -27,13 +27,13 @@ jobs:
       # Step 3: Deploy Application to Server
       - name: Deploy Application to Server
         run: |
-          scp -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} -r ./artifact/.next/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pi/nextjs-app/.next/
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }}" ./artifact/.next/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pgovind/Public/WWW/PraveenGovind/praveengovind/.next/
 
       # Step 4: Restart Application
       - name: Restart Application
         run: |
           ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
-          cd /home/pi/nextjs-app
+          cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind
           npm install --production
           pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
           EOF
