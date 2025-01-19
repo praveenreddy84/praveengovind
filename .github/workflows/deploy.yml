@@ -18,12 +18,16 @@ jobs:
           name: nextjs-build
           path: ./artifact
 
-      # Step 2: Deploy Application to Server
+      # Step 2: Debug Artifact Contents
+      - name: Verify Artifact Contents
+        run: ls -la ./artifact/
+
+      # Step 3: Deploy Application to Server
       - name: Deploy Application to Server
         run: |
-          scp -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} -r ./artifact/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pi/nextjs-app/.next/
+          scp -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} -r ./artifact/.next/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/pi/nextjs-app/.next/
 
-      # Step 3: Restart Application
+      # Step 4: Restart Application
       - name: Restart Application
         run: |
           ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
