@@ -2,7 +2,7 @@ name: Deploy Next.js Application
 
 on:
   workflow_run:
-      workflows: ['Build Next.js Application']
+      workflows: ['Build and Upload Next.js Artifacts']
       types: [completed]
       branches:
           - 'main'
