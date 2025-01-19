@@ -1,12 +1,11 @@
 name: Deploy Next.js Application
 
 on:
-  workflow_run:
-    workflows:
-      - Build Next.js Application  # Name of the build workflow
-    types:
-      - completed  # Trigger on completion of the build workflow
-
+    workflow_run:
+      workflows:
+        - Build Next.js Application
+      types:
+        - completed
 jobs:
   deploy:
     name: Deploy Next.js Application
@@ -17,7 +16,7 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: static-site  # Ensure this matches the artifact name in build.yml
+          name: nextjs-build  # Ensure this matches the artifact name in build.yml
 
       # Step 2: Deploy the artifact to the server
       - name: Deploy Application to Server
@@ -26,17 +25,3 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: .next/
-          target: /home/pi/nextjs-app/.next/
-
-      # Step 3: Restart the application on the server
-      - name: Restart Application
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/pi/nextjs-app
-            npm install --production
-            pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
