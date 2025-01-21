@@ -10,8 +10,13 @@ jobs:
     name: Deploy Next.js Application
     runs-on: self-hosted
 
+    
+
     steps:
-      # Step 1: Download Build Artifacts
+      # Step 1: Clear Target Directory
+      - name: Clear Artiface Directory
+        run: rm -rf ./praveengovind_artifact/*
+      # Step 2: Download Build Artifacts
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -20,11 +25,11 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
         
-      # Step 2: Debug Artifact Contents
+      # Step 3: Debug Artifact Contents
       - name: Verify Artifact Contents
         run: ls -la ./praveengovind_artifact/
 
-      # Step 3: Create Target Directory
+      # Step 4: Create Target Directory
       - name: Create Target Directory
         run: mkdir -p /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
 
