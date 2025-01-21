@@ -44,16 +44,23 @@ jobs:
       - name: Fix Permissions
         run: |
           cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-      # Step 3: Install dependencies
+      # Step 7: Set File Permissions
+      - name: Fix Permissions
+        run: |
+          chown -R pgovind:pgovind /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+          chmod -R 755 /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+
+      # Step 8: Install Dependencies (if required)
       - name: Install Dependencies
-        run: npm install
-
-      # Step 4: Build the application
-      - name: Build Next.js Application
-        run: npm run build
-        continue-on-error: false
-
-      # Step 9: Restart Application
+        run: |
+          cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+          npm install
+      # Step 9: Install Dependencies (if required)
+      - name: Install Dependencies
+        run: |
+          cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+          npm run build
+      # Step 10: Restart Application
       - name: Restart Application
         run: |
           export PATH=$PATH:/usr/local/bin
@@ -61,7 +68,7 @@ jobs:
           pm2 describe nextjs-app || pm2 start npm --name "nextjs-app" -- start
           pm2 restart nextjs-app --update-env
 
-      # Step 10: Save PM2 Process
+      # Step 11: Save PM2 Process
       - name: Save PM2 Process
         run: |
           export PATH=$PATH:/usr/local/bin
