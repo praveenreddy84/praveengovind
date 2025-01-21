@@ -37,7 +37,7 @@ jobs:
           echo ".next directory:"
           ls -la .next/
       - name: remove node modules
-        run: rm -rf /node_modules/*
+        run: rm -rf node_modules/*
       - name: remove package-lock.json
         run: rm -r package-lock.json
 
