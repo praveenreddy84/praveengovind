@@ -62,24 +62,16 @@ jobs:
           npm run build
       - name: Stop Existing PM2 Process
         run: |
-          export PATH=$PATH:/usr/local/bin
-          export PM2_HOME=/home/pgovind/.pm2
-          pm2 stop nextjs-app || echo "PM2 process nextjs-app not running, skipping stop."
+          sudo pm2 stop nextjs-app || echo "PM2 process nextjs-app not running, skipping stop."
       - name: Start or Restart Application with PM2
         run: |
-          export PATH=$PATH:/usr/local/bin
-          export PM2_HOME=/home/pgovind/.pm2
-          pm2 start npm --name "nextjs-app" -- start
+          sudo pm2 start npm --name "nextjs-app" -- start
 
       # Step 10: Restart Application
       - name: Restart Application
         run: |
-          export PATH=$PATH:/usr/local/bin
-          export PM2_HOME=/home/pgovind/.pm2
-          pm2 describe nextjs-app
+          sudo pm2 describe nextjs-app
       # Step 11: Save PM2 Process
       - name: Save PM2 Process
         run: |
-          export PATH=$PATH:/usr/local/bin
-          export PM2_HOME=/home/pgovind/.pm2
-          pm2 save
+          sudo pm2 save
