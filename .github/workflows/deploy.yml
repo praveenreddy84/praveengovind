@@ -48,10 +48,8 @@ jobs:
       - name: Fix Permissions
         run: |
           chown -R pgovind:pgovind /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-          chmod -R 755 /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-          chown pgovind:pgovind /home/pgovind/Public/WWW/PraveenGovind/praveengovind/package.json
-
-
+          find /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/ -type d -exec chmod 755 {} \;
+          find /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/ -type f -exec chmod 644 {} \;
       # Step 8: Install Dependencies (if required)
       - name: Install Dependencies
         run: |
