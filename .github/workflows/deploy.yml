@@ -65,8 +65,8 @@ jobs:
         run: |
           export PATH=$PATH:/usr/local/bin
           export PM2_HOME=/home/pgovind/.pm2
-          pm2 describe praveengovind-nextjs-app || pm2 start npm --name "praveengovind-nextjs-app" -- start --instances 1
-          pm2 restart praveengovind-nextjs-app --update-env --instances 1
+          pm2 describe nextjs-app || pm2 start npm --name "nextjs-app" -- start --instances 1
+          pm2 restart nextjs-app --update-env --instances 1
 
       # Step 11: Save PM2 Process
       - name: Save PM2 Process
