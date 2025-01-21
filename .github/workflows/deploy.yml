@@ -41,8 +41,13 @@ jobs:
         run: |
           sudo chown -R pgovind:pgovind /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
           sudo chmod -R 755 /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+      # Step 6: Set File Permissions
+      - name: Install Dependencies (if needed)
+        run: |
+          cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+          npm install --production
 
-      # Step 6: Restart Application
+      # Step 7: Restart Application
       - name: Restart Application
         run: |
           export PATH=$PATH:/usr/local/bin

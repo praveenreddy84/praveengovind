@@ -45,7 +45,6 @@ jobs:
           path: |
               .next/
               public/
-              node_modules/
               package.json
           include-hidden-files: true
           if-no-files-found: error
