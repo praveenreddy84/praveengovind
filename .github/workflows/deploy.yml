@@ -43,8 +43,15 @@ jobs:
       # Step 6: Set File Permissions
       - name: Fix Permissions
         run: |
-          sudo chown -R pgovind:pgovind /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-          sudo chmod -R 755 /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+          cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Step 4: Build the application
+      - name: Build Next.js Application
+        run: npm run build
+        continue-on-error: false
 
       # Step 9: Restart Application
       - name: Restart Application
