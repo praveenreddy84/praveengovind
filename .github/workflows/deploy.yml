@@ -61,12 +61,18 @@ jobs:
           cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
           npm run build
       # Step 10: Restart Application
-      - name: Restart Application
+      - name: Restart Application with PM2
         run: |
           export PATH=$PATH:/usr/local/bin
           export PM2_HOME=/home/pgovind/.pm2
-          pm2 describe nextjs-app || pm2 start npm --name "nextjs-app" -- start --instances 1
-          pm2 restart nextjs-app --update-env --instances 1
+          pm2 describe nextjs-app > /dev/null 2>&1
+          if [ $? -eq 0 ]; then
+            echo "Restarting existing PM2 process..."
+            pm2 restart nextjs-app --update-env
+          else
+            echo "Starting a new PM2 process..."
+            pm2 start npm --name "nextjs-app" -- start
+          fi
 
       # Step 11: Save PM2 Process
       - name: Save PM2 Process
