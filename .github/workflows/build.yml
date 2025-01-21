@@ -39,8 +39,8 @@ jobs:
       - name: remove node modules
         run: rm -rf /node_modules/*
       - name: remove package-lock.json
-        run: rm -r /package-lock.json
-        
+        run: rm -r package-lock.json
+
       # Step 6: Upload build artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
