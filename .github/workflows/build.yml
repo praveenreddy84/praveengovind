@@ -46,6 +46,9 @@ jobs:
               .next/
               public/
               package.json
+          exclude: |
+              package-lock.json
+              node_modules/
           include-hidden-files: true
           if-no-files-found: error
           compression-level: 9
