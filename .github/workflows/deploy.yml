@@ -32,21 +32,27 @@ jobs:
       - name: Clear Target Directory
         run: rm -rf /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/*
 
-      # Step 5: Copy Files to Target Directory
+      # Step 4: Copy Files to Target Directory
       - name: Copy Files
         run: cp -r ./praveengovind_artifact/* /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+
+      # Step 5: Set File Permissions
+      - name: Fix Permissions
+        run: |
+          sudo chown -R pgovind:pgovind /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
+          sudo chmod -R 755 /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
 
       # Step 6: Restart Application
       - name: Restart Application
         run: |
           export PATH=$PATH:/usr/local/bin
           export PM2_HOME=/home/pgovind/.pm2
-          cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-          npm install --production
           pm2 describe nextjs-app || pm2 start npm --name "nextjs-app" -- start
           pm2 restart nextjs-app --update-env
 
       # Step 7: Save PM2 Process
       - name: Save PM2 Process
         run: |
+          export PATH=$PATH:/usr/local/bin
+          export PM2_HOME=/home/pgovind/.pm2
           pm2 save
