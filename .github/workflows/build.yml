@@ -43,7 +43,7 @@ jobs:
         with:
           name: nextjs-build
           path: |
-            ${{ github.workspace }}/*
+            ${{ github.workspace }}/.next
           include-hidden-files: true
           if-no-files-found: error
           compression-level: 9
