@@ -36,8 +36,12 @@ jobs:
           ls -la
           echo ".next directory:"
           ls -la .next/
-
-      # Step 6: Upload build artifacts
+      # Step 6: Clear Target Directory
+      - name: Remove package-lock.json
+        run: rm -f package-lock.json
+      - name: Remove package-lock.json
+        run: rm -rf node_modules/*
+      # Step 7: Upload build artifacts
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
