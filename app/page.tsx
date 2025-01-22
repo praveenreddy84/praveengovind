@@ -20,7 +20,7 @@ export default function Home() {
             </code>
             .
           </li>
-          <li>Praveen Govind test.</li>
+          <li>Praveen Govind test2.</li>
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">

@@ -75,3 +75,4 @@ jobs:
       - name: Save PM2 Process
         run: |
           pm2 save --force
+          pm2 reload all
