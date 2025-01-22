@@ -62,16 +62,16 @@ jobs:
           npm run build
       - name: Stop Existing PM2 Process
         run: |
-          sudo pm2 stop nextjs-app || echo "PM2 process nextjs-app not running, skipping stop."
+          pm2 stop nextjs-app || echo "PM2 process nextjs-app not running, skipping stop."
       - name: Start or Restart Application with PM2
         run: |
-          sudo pm2 start npm --name "nextjs-app" -- start
+          pm2 start npm --name "nextjs-app" -- start
 
       # Step 10: Restart Application
       - name: Restart Application
         run: |
-          sudo pm2 describe nextjs-app
+          pm2 describe nextjs-app
       # Step 11: Save PM2 Process
       - name: Save PM2 Process
         run: |
-          sudo pm2 save
+          pm2 save --force
