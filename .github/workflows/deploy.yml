@@ -60,8 +60,9 @@ jobs:
           pm2 delete nextjs-app || echo "PM2 process nextjs-app not running, skipping delete."
       - name: Start or Restart Application with PM2
         run: |
+          cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
           whoami
-          pm2 start npm --name "nextjs-app" -- start
+          pm2 start "npm run start" --name "nextjs-app"
 
       # Step 10: Restart Application
       - name: Restart Application
