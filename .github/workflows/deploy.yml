@@ -44,12 +44,6 @@ jobs:
       - name: Fix Permissions
         run: |
           cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-      # Step 7: Set File Permissions
-      - name: Fix Permissions
-        run: |
-          chown -R pgovind:pgovind /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-          find /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/ -type d -exec chmod 755 {} \;
-          find /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/ -type f -exec chmod 644 {} \;
       # Step 8: Install Dependencies (if required)
       - name: Install Dependencies
         run: |
@@ -63,6 +57,7 @@ jobs:
       - name: Stop Existing PM2 Process
         run: |
           pm2 stop nextjs-app || echo "PM2 process nextjs-app not running, skipping stop."
+          pm2 delete nextjs-app || echo "PM2 process nextjs-app not running, skipping delete."
       - name: Start or Restart Application with PM2
         run: |
           whoami
