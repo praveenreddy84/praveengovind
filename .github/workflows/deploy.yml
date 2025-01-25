@@ -48,7 +48,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd /home/pgovind/Public/WWW/PraveenGovind/praveengovind/Site/
-          npm install
+          npm install --legacy-peer-deps
       # Step 9: Install Dependencies (if required)
       - name: Install Dependencies
         run: |
