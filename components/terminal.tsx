@@ -11,15 +11,15 @@ const sequence = [
     type: "output",
     text: "🛠️ Expertise: Scalable systems, cloud architecture, app development\n🚀 Passion: Building innovative solutions",
   },
-  { type: "command", text: "What's next?" },
-  { type: "output", text: "Let's build something amazing together." },
   { type: "command", text: "Fun fact --about-me" },
-  { type: "output", text: "Praveen's work has powered millions of users globally." },
+  { type: "output", text: "Praveen once optimized a cloud deployment so efficiently, it saved enough resources to power a small startup for a year! ⚡" },
   { type: "command", text: "cat goals.txt" },
   {
     type: "output",
-    text: "Delivering high-performance applications.\nExploring cutting-edge technologies.\nEmpowering teams to create impact.",
+    text: "🌍 Designing a life of freedom and purpose.\n📈 Building wealth through smart decisions and continuous learning.\n",
   },
+  { type: "command", text: "What's next?" },
+  { type: "output", text: "Let's build something amazing together." },
 ]
 
 export function Terminal() {

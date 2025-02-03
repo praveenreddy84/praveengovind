@@ -7,28 +7,29 @@ const experiences = [
   {
     years: "2018 - Present",
     duration: "5+ years",
-    role: "Lead Software Architect",
-    company: "Tech Innovations Inc.",
+    role: "Applications Architect",
+    company: "Toyota Motors North America, USA",
     description:
-      "Leading architecture design for enterprise-scale applications, focusing on cloud-native solutions and microservices architecture.",
+    "Architecting and modernizing enterprise applications with cloud-native solutions on AWS and Azure. Designing scalable, high-performance systems using microservices, serverless computing, and containerization (Docker). Leading initiatives to reduce tech debt by migrating applications to the latest technologies, optimizing costs, and implementing CI/CD automation. Driving infrastructure as code (Terraform, AWS CDK) and observability practices to enhance deployment efficiency and system performance.",
+},
+  {
+    years: "2015 - 2018",
+    duration: "3 years",
+    role: "Delivery Manager",
+    company: "CES Technology Services Pvt. Ltd., India",
+    description:
+      "Led end-to-end project management, handled multi-tier client-server applications, managed a team of 15 and responsible for deliveries.",
   },
   {
-    years: "2012 - 2018",
-    duration: "6 years",
-    role: "Senior Software Engineer",
-    company: "Global Systems Ltd.",
+    years: "2007 - 2015",
+    duration: "8 years",
+    role: "Technical Lead / Co-Founder",
+    company: "Tech4sys Software Solutions, India",
     description:
-      "Developed and maintained large-scale distributed systems, implemented CI/CD pipelines, and mentored junior developers.",
+      "Managed and led development teams, designed scalable databases, developed applications in Open Source Technologies, Angular, NodeJs and integrated UX/UI best practices.",
   },
-  {
-    years: "2007 - 2012",
-    duration: "5 years",
-    role: "Software Developer",
-    company: "StartUp Dynamics",
-    description:
-      "Worked on various projects involving web and mobile application development, database design, and system integration.",
-  },
-]
+];
+
 
 const currentYear = new Date().getFullYear()
 const startYear = 2006
@@ -78,7 +79,7 @@ export function Experience() {
             Professional Journey
           </h2>
           <p className="mt-4 text-gray-400">
-            Over {currentYear - startYear} years of experience in software development and architecture
+            Over {currentYear-1- startYear} years of experience in software development and architecture
           </p>
         </motion.div>
 

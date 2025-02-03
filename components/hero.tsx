@@ -53,9 +53,8 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-6"
           >
-            <p className="text-lg md:text-xl text-gray-400 max-w-2xl">
-              Software Architect with over 18 years of experience building high-performance applications and scalable
-              systems.
+            <p className="text-lg md:text-xl text-gray-400 max-w-6xl">
+            I thrive on architecting scalable and high-performance solutions, yet simplicity is my superpower. Programming is my passion, but life is my greatest teacher. While there isn’t a Wikipedia page about me (yet!), this space is here to share my journey—both in code and beyond.
             </p>
           </motion.div>
 

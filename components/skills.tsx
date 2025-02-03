@@ -3,13 +3,20 @@
 import { motion } from "framer-motion"
 
 const skills = [
-  { name: "Architecture", color: "from-purple-500 to-purple-700" },
-  { name: "Cloud Native", color: "from-blue-500 to-blue-700" },
-  { name: "DevOps", color: "from-green-500 to-green-700" },
-  { name: "Microservices", color: "from-yellow-500 to-yellow-700" },
-  { name: "API Design", color: "from-red-500 to-red-700" },
-  { name: "System Design", color: "from-indigo-500 to-indigo-700" },
-]
+  { name: "Cloud Native Development (AWS)", color: "from-blue-500 to-blue-700" },
+  { name: "Microservices Architecture", color: "from-yellow-500 to-yellow-700" },
+  { name: ".NET & .NET Core Development", color: "from-purple-500 to-purple-700" },
+  { name: "Serverless Computing (AWS Lambda, ECS)", color: "from-cyan-500 to-cyan-700" },
+  { name: "DevOps & CI/CD Automation", color: "from-green-500 to-green-700" },
+  { name: "React.js & Modern Frontend", color: "from-indigo-500 to-indigo-700" },
+  { name: "Node.js & API Development", color: "from-red-500 to-red-700" },
+  { name: "Oracle DB, MS SQL, Postgress & MySQL", color: "from-teal-500 to-teal-700" },
+  { name: "Infrastructure as Code (Terraform, AWS CDK)", color: "from-gray-500 to-gray-700" },
+  { name: "Full-Stack Development", color: "from-pink-500 to-pink-700" },
+  { name: "Love for PHP", color: "from-orange-500 to-orange-700" },
+  { name: "Power Apps & Low-Code Development", color: "from-amber-500 to-amber-700" },
+];
+
 
 export function Skills() {
   return (
