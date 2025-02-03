@@ -29,7 +29,7 @@ export function Hero() {
             className="relative w-40 h-40 md:w-48 md:h-48 mb-8 rounded-full overflow-hidden border-2 border-gray-800"
           >
             <Image
-              src="/placeholder.svg"
+              src="/praveengovind.jpg"
               alt="Praveen Govind"
               layout="fill"
               objectFit="cover"
