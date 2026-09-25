@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
-import { Geist, Azeret_Mono as Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { site } from "@/lib/site"
+import "./globals.css"
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -10,10 +12,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+})
 
 export const metadata: Metadata = {
-  title: "Praveen Govind - Software Architect",
-  description: "Personal website of Praveen Govind, a software architect with over 18 years of experience",
+  title: `${site.name} — ${site.role}`,
+  description: site.tagline,
+  openGraph: {
+    title: `${site.name} — ${site.role}`,
+    description: site.tagline,
+    type: "website",
+  },
 }
 
 export default function RootLayout({
@@ -23,15 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} font-sans antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
-
-
-import './globals.css'

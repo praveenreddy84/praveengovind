@@ -1,93 +1,105 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Terminal } from "./terminal"
 import Image from "next/image"
+import { motion, useReducedMotion } from "framer-motion"
+import { ArrowDownRight, ArrowUpRight } from "lucide-react"
+import { highlights, site, stats } from "@/lib/site"
+import { Container, Eyebrow } from "./primitives"
 
 export function Hero() {
-  const scrollToContact = () => {
-    const contactSection = document.getElementById("contact")
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" })
-    }
-  }
+  const reduce = useReducedMotion()
+  const fade = (delay: number) => ({
+    initial: reduce ? false : { opacity: 0, y: 18 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
+  })
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-black">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-gray-950">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:32px_32px]" />
-      </div>
+    <section id="top" className="relative overflow-hidden pt-32 md:pt-40">
+      {/* Grid backdrop */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 [background-image:linear-gradient(rgb(var(--site-line)/0.5)_1px,transparent_1px),linear-gradient(90deg,rgb(var(--site-line)/0.5)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-site-accent/15 blur-3xl"
+      />
 
-      <div className="container px-4 mx-auto relative z-10">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="relative w-40 h-40 md:w-48 md:h-48 mb-8 rounded-full overflow-hidden border-2 border-gray-800"
-          >
-            <Image
-              src="/praveengovind.jpg"
-              alt="Praveen Govind"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-full"
-            />
-          </motion.div>
+      <Container className="relative">
+        <div className="grid items-start gap-12 lg:grid-cols-[1fr_auto]">
+          <div>
+            <motion.div {...fade(0)} className="flex items-center gap-3">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-site-accent opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-site-accent" />
+              </span>
+              <Eyebrow className="[&>span]:hidden">
+                {site.name} · {site.role}
+              </Eyebrow>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
-              Praveen Govind
-            </h1>
-          </motion.div>
+            <motion.h1
+              {...fade(0.1)}
+              className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
+            >
+              I architect systems that <span className="font-serif font-normal italic text-site-accent">scale</span>{" "}
+              — and keep them <span className="font-serif font-normal italic">simple</span>.
+            </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-6"
-          >
-            <p className="text-lg md:text-xl text-gray-400 max-w-6xl">
-            I thrive on architecting scalable and high-performance solutions, yet simplicity is my superpower. Programming is my passion, but life is my greatest teacher. While there isn’t a Wikipedia page about me (yet!), this space is here to share my journey—both in code and beyond.
+            <motion.p {...fade(0.2)} className="mt-8 max-w-2xl text-lg leading-relaxed text-site-muted">
+              {site.intro}
+            </motion.p>
+
+            <motion.div {...fade(0.3)} className="mt-10 flex flex-wrap gap-3">
+              <a
+                href="#work"
+                className="group inline-flex items-center gap-2 rounded-lg bg-site-fg px-5 py-3 text-sm font-medium text-site-bg transition-opacity hover:opacity-85"
+              >
+                See selected work
+                <ArrowDownRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+              </a>
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2 rounded-lg border border-site-line px-5 py-3 text-sm font-medium transition-colors hover:border-site-fg/40"
+              >
+                Say hi 👋
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+            </motion.div>
+          </div>
+
+          <motion.div {...fade(0.25)}>
+            <div className="relative h-44 w-40 overflow-hidden lg:h-64 lg:w-56 rounded-2xl border border-site-line bg-site-panel">
+              <Image src={site.photo} alt={site.name} fill sizes="(min-width: 1024px) 224px, 160px" className="object-cover grayscale-[20%]" priority />
+            </div>
+            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-site-muted">
+              <span className="text-site-accent">●</span> Currently @ Toyota NA
             </p>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="mt-8"
-          >
-            <Button
-              size="lg"
-              className="bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-300"
-              onClick={scrollToContact}
-            >
-              Say Hi 👋
-            </Button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            className="w-full mt-12"
-          >
-            <Terminal />
-          </motion.div>
         </div>
-      </div>
 
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-purple-500/20 rounded-full filter blur-3xl opacity-20" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full filter blur-3xl opacity-20" />
+        {/* Highlights */}
+        <motion.ul {...fade(0.4)} className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-site-line bg-site-line md:grid-cols-3">
+          {highlights.map((h, i) => (
+            <li key={h} className="bg-site-bg p-6">
+              <span className="font-mono text-xs text-site-accent">0{i + 1}</span>
+              <p className="mt-3 text-sm leading-relaxed text-site-fg/90">{h}</p>
+            </li>
+          ))}
+        </motion.ul>
+
+        {/* Stats */}
+        <motion.dl {...fade(0.5)} className="mt-px grid grid-cols-2 border-b border-site-line py-12 md:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="py-4 pr-4">
+              <dt className="sr-only">{s.label}</dt>
+              <dd className="text-4xl font-semibold tracking-tight md:text-5xl">{s.value}</dd>
+              <dd className="mt-2 font-mono text-xs uppercase tracking-wider text-site-muted">{s.label}</dd>
+            </div>
+          ))}
+        </motion.dl>
+      </Container>
     </section>
   )
 }
-

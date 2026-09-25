@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
 
 @layer utilities {
   .text-balance {
@@ -39,6 +36,13 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    /* Site palette (RGB triplets so Tailwind opacity modifiers work) */
+    --site-bg: 250 249 246;
+    --site-panel: 255 255 255;
+    --site-fg: 20 20 22;
+    --site-muted: 98 98 96;
+    --site-line: 224 222 216;
+    --site-accent: 206 84 26;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -49,6 +53,12 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
+    --site-bg: 10 10 11;
+    --site-panel: 19 19 21;
+    --site-fg: 237 236 232;
+    --site-muted: 150 150 145;
+    --site-line: 40 40 43;
+    --site-accent: 255 138 76;
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
@@ -88,7 +98,20 @@ body {
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-site-bg text-site-fg;
+  }
+  ::selection {
+    background: rgb(var(--site-accent) / 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
