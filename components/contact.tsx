@@ -5,22 +5,48 @@ import { ArrowUpRight, Check, Copy } from "lucide-react"
 import { site } from "@/lib/site"
 import { Container, Reveal, SectionHeader } from "./primitives"
 
+const contactEndpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT
+
 const inputClass =
   "w-full rounded-lg border border-site-line bg-site-panel px-4 py-3 text-sm text-site-fg placeholder:text-site-muted/70 outline-none transition-colors focus:border-site-accent"
 
 export function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" })
+  const [form, setForm] = useState({ name: "", email: "", message: "", company: "" })
   const [copied, setCopied] = useState(false)
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
+  const [error, setError] = useState("")
 
   const update = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
-  // No backend: compose the message in the visitor's mail client.
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const openMailClient = () => {
     const subject = `Hello from ${form.name}`
     const body = `${form.message}\n\n— ${form.name} (${form.email})`
     window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
+
+  // With a contact API (the AWS build sets one) messages are sent directly;
+  // otherwise the message is composed in the visitor's mail client.
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!contactEndpoint) return openMailClient()
+
+    setStatus("sending")
+    setError("")
+    try {
+      const res = await fetch(contactEndpoint, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || "Something went wrong.")
+      setStatus("sent")
+      setForm({ name: "", email: "", message: "", company: "" })
+    } catch (err) {
+      setStatus("error")
+      setError(err instanceof Error ? err.message : "Something went wrong.")
+    }
   }
 
   const copyEmail = async () => {
@@ -122,14 +148,36 @@ export function Contact() {
                     className={`${inputClass} resize-none`}
                   />
                 </label>
+                {/* Honeypot: hidden from people, filled in by bots. */}
+                <input
+                  name="company"
+                  value={form.company}
+                  onChange={update}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
                 <button
                   type="submit"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-site-accent px-5 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90"
+                  disabled={status === "sending"}
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-site-accent px-5 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90 disabled:opacity-60"
                 >
-                  Send message
+                  {status === "sending" ? "Sending…" : "Send message"}
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </button>
-                <p className="text-center font-mono text-[11px] text-site-muted">Opens your email app with the message ready to send.</p>
+                <p
+                  className={`text-center font-mono text-[11px] ${status === "error" ? "text-red-500" : status === "sent" ? "text-site-accent" : "text-site-muted"}`}
+                  aria-live="polite"
+                >
+                  {status === "sent"
+                    ? "Thanks! Your message is on its way — I'll get back to you soon."
+                    : status === "error"
+                      ? `${error} You can also email ${site.email}.`
+                      : contactEndpoint
+                        ? "Your message is sent straight to my inbox."
+                        : "Opens your email app with the message ready to send."}
+                </p>
               </form>
             </Reveal>
           </div>

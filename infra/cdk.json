@@ -1,0 +1,10 @@
+{
+  "app": "npx tsx bin/app.ts",
+  "context": {
+    "siteDir": "../out",
+    "domainName": "",
+    "hostedZoneName": "",
+    "contactEmail": "",
+    "githubRepo": "praveenreddy84/praveengovind"
+  }
+}

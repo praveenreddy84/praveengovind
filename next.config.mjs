@@ -7,6 +7,9 @@ try {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // STATIC_EXPORT=1 builds plain HTML into out/ for S3 + CloudFront (see infra/).
+  // Vercel builds leave it unset.
+  ...(process.env.STATIC_EXPORT === '1' && { output: 'export', trailingSlash: true }),
   eslint: {
     ignoreDuringBuilds: true,
   },

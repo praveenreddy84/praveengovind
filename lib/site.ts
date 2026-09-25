@@ -46,6 +46,20 @@ export type Project = {
 export const projects: Project[] = [
   {
     index: "01",
+    title: "This Portfolio, Fully on AWS",
+    kicker: "Open-source infrastructure as code",
+    summary: "The site you're reading, packaged to run on AWS and defined end to end in AWS CDK.",
+    problem:
+      "A portfolio should prove the claims it makes: secure, cheap, automated infrastructure, not just a nice page on someone else's platform.",
+    build:
+      "Private S3 behind CloudFront with edge routing and security headers, a throttled Lambda + SES contact API on the same domain, ACM and Route 53, and GitHub Actions deploying through OIDC with no stored keys.",
+    outcome:
+      "23 automated tests assert the security properties in CI, the whole stack deploys or tears down with one command, and it is designed to run for about the cost of a Route 53 hosted zone.",
+    tags: ["AWS CDK", "CloudFront", "S3", "Lambda", "SES", "GitHub OIDC"],
+    href: "https://github.com/praveenreddy84/praveengovind/tree/main/infra",
+  },
+  {
+    index: "02",
     title: "Enterprise Cloud Modernization",
     kicker: "Toyota Motors North America",
     summary: "Moving long-lived enterprise applications onto cloud-native AWS and Azure platforms.",
@@ -56,7 +70,7 @@ export const projects: Project[] = [
     tags: ["AWS", "Azure", "Microservices", "Serverless", "Docker"],
   },
   {
-    index: "02",
+    index: "03",
     title: "Infrastructure as Code & Delivery Pipelines",
     kicker: "Platform engineering",
     summary: "Every environment defined in code, every change shipped through an automated pipeline.",
@@ -67,7 +81,7 @@ export const projects: Project[] = [
     tags: ["Terraform", "AWS CDK", "CI/CD", "Observability"],
   },
   {
-    index: "03",
+    index: "04",
     title: "Tech4sys Software Solutions",
     kicker: "Co-founder & Technical Lead",
     summary: "Co-founded a software company and built products on open-source technologies.",

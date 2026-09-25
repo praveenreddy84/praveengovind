@@ -21,4 +21,7 @@ npm run build
 ## Deployment
 
 Hosted on [Vercel](https://vercel.com). Pushes to `main` deploy to production; other branches get preview URLs.
-`.npmrc` sets `legacy-peer-deps` so installs work without extra flags. GitHub Actions only runs a build check.
+`.npmrc` sets `legacy-peer-deps` so installs work without extra flags.
+
+The site can also run on AWS (S3 + CloudFront + a serverless contact API), defined in CDK under
+[`infra/`](infra/README.md). `STATIC_EXPORT=1 npm run build` produces the static files it deploys.

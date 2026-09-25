@@ -1,0 +1,54 @@
+name: Deploy to AWS
+
+# Builds the static export and deploys it with CDK to S3 + CloudFront.
+# Runs only once the repository variable AWS_DEPLOY_ROLE_ARN is set (see infra/README.md),
+# so it stays dormant while the site is hosted on Vercel alone.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write # GitHub OIDC → short-lived AWS credentials, no stored keys
+  contents: read
+
+concurrency:
+  group: deploy-aws
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.AWS_DEPLOY_ROLE_ARN != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            infra/package-lock.json
+
+      - name: Build static site
+        run: |
+          npm ci
+          npm run build
+        env:
+          STATIC_EXPORT: '1'
+          NEXT_PUBLIC_CONTACT_ENDPOINT: ${{ vars.CONTACT_EMAIL != '' && '/api/contact' || '' }}
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Deploy
+        working-directory: infra
+        run: |
+          npm ci
+          npx cdk deploy PortfolioSite --require-approval never \
+            -c domainName="${{ vars.DOMAIN_NAME }}" \
+            -c hostedZoneName="${{ vars.HOSTED_ZONE_NAME }}" \
+            -c contactEmail="${{ vars.CONTACT_EMAIL }}" \
+            -c contactFromEmail="${{ vars.CONTACT_FROM_EMAIL }}"
