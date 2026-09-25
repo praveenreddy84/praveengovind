@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { defaultTitle, keywords, siteUrl } from "@/lib/seo"
 import { site } from "@/lib/site"
 import "./globals.css"
 
@@ -20,13 +21,27 @@ const instrumentSerif = Instrument_Serif({
 })
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
+  metadataBase: new URL(siteUrl),
+  title: { default: defaultTitle, template: `%s — ${site.name}` },
   description: site.tagline,
+  keywords,
+  authors: [{ name: site.name, url: siteUrl }],
+  creator: site.name,
+  alternates: { canonical: "/" },
   openGraph: {
-    title: `${site.name} — ${site.role}`,
-    description: site.tagline,
     type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: site.name,
+    title: defaultTitle,
+    description: site.tagline,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: site.tagline,
+  },
+  robots: { index: true, follow: true },
 }
 
 export default function RootLayout({

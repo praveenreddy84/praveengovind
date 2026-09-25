@@ -6,10 +6,15 @@ import { Nav } from "@/components/nav"
 import { Container, Eyebrow } from "@/components/primitives"
 import { Simulator } from "@/components/simulator/simulator"
 
+const description =
+  "Design a web architecture, send it real traffic, and watch where it breaks. Interactive challenges on caching, scaling, queues and cost."
+
 export const metadata: Metadata = {
-  title: "System Design Simulator — Praveen Govind",
-  description:
-    "Design a web architecture, send it real traffic, and watch where it breaks. Interactive challenges on caching, scaling, queues and cost.",
+  title: "System Design Simulator",
+  description,
+  alternates: { canonical: "/lab/system-design" },
+  openGraph: { url: "/lab/system-design", title: "System Design Simulator", description },
+  twitter: { title: "System Design Simulator", description },
 }
 
 export default function SystemDesignPage() {

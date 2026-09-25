@@ -1,35 +1,46 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowUpRight, Check, Copy } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { ArrowUpRight } from "lucide-react"
 import { site } from "@/lib/site"
 import { Container, Reveal, SectionHeader } from "./primitives"
 
 const inputClass =
   "w-full rounded-lg border border-site-line bg-site-panel px-4 py-3 text-sm text-site-fg placeholder:text-site-muted/70 outline-none transition-colors focus:border-site-accent"
 
+const empty = { name: "", email: "", message: "", company: "" }
+
 export function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" })
-  const [copied, setCopied] = useState(false)
+  const [form, setForm] = useState(empty)
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
+  const [error, setError] = useState("")
+  const startedAt = useRef(0)
+
+  useEffect(() => {
+    startedAt.current = Date.now()
+  }, [])
 
   const update = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
-  // No backend: compose the message in the visitor's mail client.
-  const submit = (e: React.FormEvent) => {
+  // Messages go through /api/contact, so the recipient address never appears on the site.
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = `Hello from ${form.name}`
-    const body = `${form.message}\n\n— ${form.name} (${form.email})`
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-  }
-
-  const copyEmail = async () => {
+    setStatus("sending")
+    setError("")
     try {
-      await navigator.clipboard.writeText(site.email)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      window.location.href = `mailto:${site.email}`
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...form, startedAt: startedAt.current }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || "Something went wrong.")
+      setStatus("sent")
+      setForm(empty)
+    } catch (err) {
+      setStatus("error")
+      setError(err instanceof Error ? err.message : "Something went wrong.")
     }
   }
 
@@ -52,22 +63,9 @@ export function Contact() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <Reveal className="space-y-8">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-site-muted">Email</p>
-                <button
-                  type="button"
-                  onClick={copyEmail}
-                  className="group mt-2 inline-flex items-center gap-3 text-left text-xl font-medium break-all transition-colors hover:text-site-accent md:text-2xl"
-                >
-                  {site.email}
-                  {copied ? (
-                    <Check className="h-5 w-5 shrink-0 text-site-accent" />
-                  ) : (
-                    <Copy className="h-5 w-5 shrink-0 text-site-muted group-hover:text-site-accent" />
-                  )}
-                </button>
-                <p className="mt-1 h-4 font-mono text-xs text-site-accent" aria-live="polite">
-                  {copied ? "Copied to clipboard" : ""}
-                </p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-site-muted">Message me</p>
+                <p className="mt-2 text-xl font-medium md:text-2xl">The form goes straight to my inbox.</p>
+                <p className="mt-2 text-site-muted">I read every message and usually reply within a few days.</p>
               </div>
 
               <div>
@@ -95,7 +93,16 @@ export function Contact() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
                     <span className="sr-only">Your name</span>
-                    <input name="name" required value={form.name} onChange={update} placeholder="Your name" className={inputClass} />
+                    <input
+                      name="name"
+                      required
+                      maxLength={100}
+                      value={form.name}
+                      onChange={update}
+                      placeholder="Your name"
+                      autoComplete="name"
+                      className={inputClass}
+                    />
                   </label>
                   <label className="block">
                     <span className="sr-only">Your email</span>
@@ -103,9 +110,11 @@ export function Contact() {
                       name="email"
                       type="email"
                       required
+                      maxLength={254}
                       value={form.email}
                       onChange={update}
                       placeholder="Your email"
+                      autoComplete="email"
                       className={inputClass}
                     />
                   </label>
@@ -115,6 +124,7 @@ export function Contact() {
                   <textarea
                     name="message"
                     required
+                    maxLength={5000}
                     rows={5}
                     value={form.message}
                     onChange={update}
@@ -122,14 +132,34 @@ export function Contact() {
                     className={`${inputClass} resize-none`}
                   />
                 </label>
+                {/* Honeypot: hidden from people, filled in by bots. */}
+                <input
+                  name="company"
+                  value={form.company}
+                  onChange={update}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
                 <button
                   type="submit"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-site-accent px-5 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90"
+                  disabled={status === "sending"}
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-site-accent px-5 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90 disabled:opacity-60"
                 >
-                  Send message
+                  {status === "sending" ? "Sending…" : "Send message"}
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </button>
-                <p className="text-center font-mono text-[11px] text-site-muted">Opens your email app with the message ready to send.</p>
+                <p
+                  className={`text-center font-mono text-[11px] ${status === "error" ? "text-red-500" : status === "sent" ? "text-site-accent" : "text-site-muted"}`}
+                  aria-live="polite"
+                >
+                  {status === "sent"
+                    ? "Thanks! Your message is on its way. I'll get back to you soon."
+                    : status === "error"
+                      ? error
+                      : "Your email is only used to reply to you."}
+                </p>
               </form>
             </Reveal>
           </div>
