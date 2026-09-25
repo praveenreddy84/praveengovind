@@ -46,6 +46,20 @@ export type Project = {
 export const projects: Project[] = [
   {
     index: "01",
+    title: "System Design Simulator",
+    kicker: "Interactive lab",
+    summary: "Build an architecture, send it traffic, and watch where it breaks. Then fix it within budget.",
+    problem:
+      "System design is usually explained with static boxes and arrows, so the trade-offs between latency, failures and cost stay abstract.",
+    build:
+      "A deterministic queueing model of CDN, load balancer, autoscaling servers, cache, replicas and a write queue, with a live traffic diagram and three graded challenges.",
+    outcome:
+      "Each challenge fails with the naive design, can't be brute-forced within budget, and needs a new idea: caching, then queues and CDNs, then scaling for launch day.",
+    tags: ["React", "TypeScript", "SVG", "Queueing theory", "Architecture"],
+    href: "/lab/system-design",
+  },
+  {
+    index: "02",
     title: "Enterprise Cloud Modernization",
     kicker: "Toyota Motors North America",
     summary: "Moving long-lived enterprise applications onto cloud-native AWS and Azure platforms.",
@@ -56,7 +70,7 @@ export const projects: Project[] = [
     tags: ["AWS", "Azure", "Microservices", "Serverless", "Docker"],
   },
   {
-    index: "02",
+    index: "03",
     title: "Infrastructure as Code & Delivery Pipelines",
     kicker: "Platform engineering",
     summary: "Every environment defined in code, every change shipped through an automated pipeline.",
@@ -67,7 +81,7 @@ export const projects: Project[] = [
     tags: ["Terraform", "AWS CDK", "CI/CD", "Observability"],
   },
   {
-    index: "03",
+    index: "04",
     title: "Tech4sys Software Solutions",
     kicker: "Co-founder & Technical Lead",
     summary: "Co-founded a software company and built products on open-source technologies.",

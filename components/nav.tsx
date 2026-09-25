@@ -8,10 +8,10 @@ import { site } from "@/lib/site"
 import { Container, Logo } from "./primitives"
 
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#experience", label: "Experience" },
-  { href: "#stack", label: "Stack" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#work", label: "Work" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#stack", label: "Stack" },
+  { href: "/#contact", label: "Contact" },
 ]
 
 function ThemeToggle() {
@@ -51,7 +51,7 @@ export function Nav() {
       )}
     >
       <Container className="flex h-16 items-center justify-between">
-        <a href="#top" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
+        <a href="/#top" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
           <Logo />
           <span className="hidden text-sm font-medium sm:inline">{site.name}</span>
         </a>
@@ -67,7 +67,7 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <a
-            href="#contact"
+            href="/#contact"
             className="hidden rounded-lg bg-site-fg px-4 py-2 text-sm font-medium text-site-bg transition-opacity hover:opacity-85 md:inline-block"
           >
             Say hi

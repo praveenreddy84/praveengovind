@@ -4,6 +4,8 @@ import { ArrowUpRight } from "lucide-react"
 import { projects } from "@/lib/site"
 import { Container, Reveal, SectionHeader } from "./primitives"
 
+const isExternal = (href: string) => /^https?:\/\//.test(href)
+
 export function Work() {
   return (
     <section id="work" className="py-24 md:py-32">
@@ -41,8 +43,7 @@ export function Work() {
                       {p.href && (
                         <a
                           href={p.href}
-                          target="_blank"
-                          rel="noreferrer"
+                          {...(isExternal(p.href) && { target: "_blank", rel: "noreferrer" })}
                           aria-label={`Open ${p.title}`}
                           className="rounded-lg border border-site-line p-2 text-site-muted transition-colors hover:border-site-accent hover:text-site-accent"
                         >
@@ -64,6 +65,16 @@ export function Work() {
                         </div>
                       ))}
                     </dl>
+
+                    {p.href && !isExternal(p.href) && (
+                      <a
+                        href={p.href}
+                        className="group/cta mt-8 inline-flex items-center gap-2 rounded-lg bg-site-accent px-4 py-2 text-sm font-medium text-black transition-opacity hover:opacity-90"
+                      >
+                        Try it live
+                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5" />
+                      </a>
+                    )}
 
                     <ul className="mt-8 flex flex-wrap gap-2">
                       {p.tags.map((t) => (
