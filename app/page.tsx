@@ -1,16 +1,23 @@
+import { Nav } from "@/components/nav"
 import { Hero } from "@/components/hero"
-import { Skills } from "@/components/skills"
+import { Work } from "@/components/work"
 import { Experience } from "@/components/experience"
+import { Stack } from "@/components/stack"
 import { Contact } from "@/components/contact"
+import { Footer } from "@/components/footer"
 
 export default function Page() {
   return (
-    <main className="bg-black">
-      <Hero />
-      <Skills />
-      <Experience />
-      <Contact />
-    </main>
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Work />
+        <Experience />
+        <Stack />
+        <Contact />
+      </main>
+      <Footer />
+    </>
   )
 }
-

@@ -1,53 +1,19 @@
-name: Build and Upload Next.js Artifacts
+name: Build
+
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+
 jobs:
   build:
     name: Build Next.js Application
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout code
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-
-      # Step 3: Install dependencies
-      - name: Install Dependencies
-        run: npm install --legacy-peer-deps
-
-      # Step 4: Build the application
-      - name: Build Next.js Application
-        run: npm run build
-        continue-on-error: false
-
-      # Step 5: Verify .next directory
-      - name: Verify Build Output
-        run: |
-          echo "Root directory:"
-          ls -la
-          echo ".next directory:"
-          ls -la .next/
-      - name: remove node modules
-        run: rm -rf node_modules/*
-      - name: remove package-lock.json
-        run: rm -r package-lock.json
-
-      # Step 6: Upload build artifacts
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: nextjs-build
-          path: |
-            ${{ github.workspace }}/*
-          include-hidden-files: true
-          if-no-files-found: error
-          compression-level: 9
+      - run: npm ci
+      - run: npm run build

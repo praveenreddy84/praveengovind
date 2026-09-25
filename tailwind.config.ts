@@ -10,7 +10,20 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+  			mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+  			serif: ['var(--font-serif)', 'Georgia', 'serif'],
+  		},
   		colors: {
+  			site: {
+  				bg: 'rgb(var(--site-bg) / <alpha-value>)',
+  				panel: 'rgb(var(--site-panel) / <alpha-value>)',
+  				fg: 'rgb(var(--site-fg) / <alpha-value>)',
+  				muted: 'rgb(var(--site-muted) / <alpha-value>)',
+  				line: 'rgb(var(--site-line) / <alpha-value>)',
+  				accent: 'rgb(var(--site-accent) / <alpha-value>)',
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
