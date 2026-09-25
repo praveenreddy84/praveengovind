@@ -7,7 +7,6 @@ export const site = {
   tagline: "I architect cloud-native systems that scale — and keep them simple enough to reason about.",
   intro:
     "I thrive on architecting scalable, high-performance solutions, yet simplicity is my superpower. Programming is my passion, but life is my greatest teacher. While there isn't a Wikipedia page about me (yet!), this space is here to share my journey — both in code and beyond.",
-  email: "govindpraveen@gmail.com",
   photo: "/praveengovind.jpg",
   careerStartYear: 2007,
   socials: [

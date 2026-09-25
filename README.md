@@ -21,4 +21,13 @@ npm run build
 ## Deployment
 
 Hosted on [Vercel](https://vercel.com). Pushes to `main` deploy to production; other branches get preview URLs.
-`.npmrc` sets `legacy-peer-deps` so installs work without extra flags. GitHub Actions only runs a build check.
+`.npmrc` sets `legacy-peer-deps` so installs work without extra flags. GitHub Actions runs the tests and a build check.
+
+### Environment variables (Vercel → Settings → Environment Variables)
+
+| Variable | Purpose |
+|---|---|
+| `RESEND_API_KEY` | API key from [Resend](https://resend.com); the contact form sends email through it. |
+| `CONTACT_TO_EMAIL` | Inbox that receives contact form messages. Kept out of the code on purpose. |
+| `CONTACT_FROM_EMAIL` | Optional sender. Defaults to Resend's test sender, which can only deliver to the Resend account's own email. |
+| `NEXT_PUBLIC_SITE_URL` | Optional canonical URL (e.g. `https://yourdomain.com`) for SEO once a custom domain is live. Defaults to the Vercel production domain. |
