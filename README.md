@@ -13,7 +13,12 @@ All copy (intro, highlights, stats, selected work, experience, stack, contact li
 ## Development
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 npm run dev     # http://localhost:3000
 npm run build
 ```
+
+## Deployment
+
+Hosted on [Vercel](https://vercel.com). Pushes to `main` deploy to production; other branches get preview URLs.
+`.npmrc` sets `legacy-peer-deps` so installs work without extra flags. GitHub Actions only runs a build check.
